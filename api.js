@@ -8,8 +8,10 @@ window.addEventListener("load", () => {
   let temperatureDescription = document.querySelector(
     ".temperature-description"
   );
-  let temperatureDegree = document.querySelector(".temperature-degree");
-  let locationTimezone = document.querySelector(".location-timezone");
+  const temperatureDegree = document.querySelector(".temperature-degree");
+  const locationTimezone = document.querySelector(".location-timezone");
+  const temperatureSection = document.querySelector(".temperature");
+  const temperatureSpan = document.querySelector(".degree-section span");
 
   let temperature, summary, location;
 
@@ -18,7 +20,7 @@ window.addEventListener("load", () => {
       long = position.coords.longitude;
       lat = position.coords.latitude;
 
-      const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}`;
+      const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&lang=tr`;
       fetch(api)
         .then(response => {
           return response.json();
@@ -34,6 +36,7 @@ window.addEventListener("load", () => {
           locationTimezone.textContent = location;
 
           setIcons();
+          toggleTemperatureUnit(temperature);
         });
     });
   }
@@ -43,5 +46,17 @@ window.addEventListener("load", () => {
     skycons.play();
     const iconId = document.querySelector(".icon");
     return skycons.set(iconId, Skycons.PARTLY_CLOUDY_DAY);
+  };
+
+  toggleTemperatureUnit = temperature => {
+    temperatureSection.addEventListener("click", () => {
+      if (temperatureSpan.textContent === "K") {
+        temperatureSpan.textContent = "C";
+        temperatureDegree.textContent = (temperature - 273.15).toFixed(2);
+      } else {
+        temperatureSpan.textContent = "K";
+        temperatureDegree.textContent = temperature;
+      }
+    });
   };
 });
