@@ -32,7 +32,16 @@ window.addEventListener("load", () => {
           temperatureDegree.textContent = temperature;
           temperatureDescription.textContent = summary;
           locationTimezone.textContent = location;
+
+          setIcons();
         });
     });
   }
+
+  setIcons = () => {
+    const skycons = new Skycons({ color: "white" });
+    skycons.play();
+    const iconId = document.querySelector(".icon");
+    return skycons.set(iconId, Skycons.PARTLY_CLOUDY_DAY);
+  };
 });
