@@ -2,6 +2,13 @@ const API_KEY = "d0fc8c598c1427ba975115b0ab653892";
 // api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=d0fc8c598c1427ba975115b0ab653892
 
 window.addEventListener("load", () => {
+  setIcons = () => {
+    const skycons = new Skycons({ color: "white" });
+    skycons.play();
+    const iconId = document.querySelector(".icon");
+    return skycons.set(iconId, Skycons.PARTLY_CLOUDY_DAY);
+  };
+
   setIcons();
   let long;
   let lat;
@@ -40,13 +47,6 @@ window.addEventListener("load", () => {
         });
     });
   }
-
-  setIcons = () => {
-    const skycons = new Skycons({ color: "white" });
-    skycons.play();
-    const iconId = document.querySelector(".icon");
-    return skycons.set(iconId, Skycons.PARTLY_CLOUDY_DAY);
-  };
 
   toggleTemperatureUnit = temperature => {
     temperatureSection.addEventListener("click", () => {
